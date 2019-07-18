@@ -11,7 +11,7 @@ export default class App extends React.Component {
       registerFormData: {
         name: "",
         password: "",
-        emial: ""
+        email: ""
       }
     }
   }
@@ -21,8 +21,14 @@ export default class App extends React.Component {
     console.log(resp);
    }
 
-  handleRegisterFormChange = () => {
-    // something
+  handleRegisterFormChange = (ev) => {
+    const { name, value} = ev.target;
+    this.setState(prevState=> ({
+      registerFormData: {
+        ...prevState.registerFormData,
+        [name]: value
+      }
+    }));
   }
 
   handleRegisterSubmit = () => {
@@ -32,7 +38,7 @@ export default class App extends React.Component {
   render() {
     return (
       <div className="App">
-      <RegisterForm />
+        <RegisterForm handleRegisterFormChange={this.handleRegisterFormChange} handleRegisterSubmit={this.handleRegisterSubmit}/>
       </div>
     );
   }

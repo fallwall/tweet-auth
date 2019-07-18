@@ -1,12 +1,12 @@
 import React from 'react';
 
-export default function RegisterForm() {
+export default function RegisterForm(props) {
   return (
     <form>
-      <input type="text" name="name" placeholder="username" />
-      <input type="text" name="password" placeholder="enter user password" />
-      <input type="text" name="email" placeholder="enter user email" />
-      {/* <button onClick={this.handleSubmit}>Submit</button> */}
+      <input onChange={props.handleRegisterFormChange} type="text" name="name" placeholder="username" />
+      <input onChange={props.handleRegisterFormChange} type="password" name="password" placeholder="enter user password" autocomplete="off" minlength="8" required />
+      <input onChange={props.handleRegisterFormChange} type="text" name="email" placeholder="enter user email" />
+      <button onClick={props.handleRegisterSubmit}>Submit</button>
     </form>
   )
 }
