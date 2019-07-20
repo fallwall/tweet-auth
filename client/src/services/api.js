@@ -35,3 +35,7 @@ export const loginUser = async (userData) => {
   api.defaults.headers.common.authorization = `Bearer ${token}`;
   return user;
 }
+
+export const createTweet = async (tweetData) => {
+  await api.post(`/tweets`, tweetData);
+ }

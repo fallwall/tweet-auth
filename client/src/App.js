@@ -1,8 +1,11 @@
 import React from 'react';
 import RegisterForm from './components/RegisterForm';
-import { getPing, createUser, storeToken, getEncouragement, loginUser } from './services/api';
+import TweetForm from './components/TweetForm';
 import LoginForm from './components/LoginForm';
+import { getPing, createUser, storeToken, getEncouragement, loginUser, createTweet } from './services/api';
+
 import './App.css';
+import Axios from 'axios';
 
 export default class App extends React.Component {
   constructor() {
@@ -16,6 +19,10 @@ export default class App extends React.Component {
       loginFormData: {
         name: "",
         password: ""
+      },
+      tweetData: {
+        title: "",
+        tweet: ""
       }
     }
   }
@@ -57,11 +64,31 @@ export default class App extends React.Component {
   handleLoginSubmit = async (ev) => {
     ev.preventDefault();
     const resp = await loginUser(this.state.loginFormData);
-    console.log("responded");
     this.setState({
       loginFormData: {
         name: "",
         password: ""
+      }
+    })
+  }
+  
+  handleTweetChange = (ev) => {
+    const { name, value } = ev.target;
+    this.setState(prevState => ({
+      tweetData: {
+        ...prevState.tweetData,
+        [name]: value
+      }
+    }));
+  }
+  
+  handleTweetSubmit = async (ev) => {
+    ev.preventDefault();
+    const resp = await createTweet(this.state.tweetData);
+    this.setState({
+      tweetData: {
+        title: "",
+        tweet: ""
       }
     })
    }
@@ -77,6 +104,11 @@ export default class App extends React.Component {
           handleLoginFormChange={this.handleLoginFormChange}
           handleLoginSubmit={this.handleLoginSubmit}
           loginFormData={this.state.loginFormData}
+        />
+        <TweetForm
+          handleTweetChange={this.handleTweetChange}
+          handleTweetSubmit={this.handleTweetSubmit}
+          tweetData={this.state.tweetData}
         />
       </div>
     );

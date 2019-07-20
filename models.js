@@ -14,7 +14,16 @@ const User = sequelize.define('user', {
   email: Sequelize.STRING,
 });
 
+const Tweet = sequelize.define('tweet', {
+  tweet: Sequelize.STRING,
+  title: Sequelize.STRING,
+});
+
+User.hasMany(Tweet);
+Tweet.belongsTo(User);
+
 module.exports = {
   sequelize,
   User,
+  Tweet,
 };

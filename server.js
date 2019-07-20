@@ -3,6 +3,7 @@ const cors = require('cors');
 const logger = require('morgan');
 const bodyParser = require('body-parser');
 const users = require('./routes/userRouter');
+const tweets = require('./routes/tweetRouter');
 const { restrict } = require('./auth');
 
 const PORT = process.env.PORT || 3000;
@@ -12,6 +13,7 @@ app.use(cors());
 app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use('/users', users);
+app.use('/tweets', tweets);
 
 app.use('/ping', (req, res) => {
   res.json('pong');
