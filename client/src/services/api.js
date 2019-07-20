@@ -38,4 +38,9 @@ export const loginUser = async (userData) => {
 
 export const createTweet = async (tweetData) => {
   await api.post(`/tweets`, tweetData);
+}
+ 
+export const getAllTweets = async () => {
+  const resp = await api.get(`/tweets`);
+  return resp.data;
  }

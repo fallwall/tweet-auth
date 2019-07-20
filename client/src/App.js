@@ -2,7 +2,8 @@ import React from 'react';
 import RegisterForm from './components/RegisterForm';
 import TweetForm from './components/TweetForm';
 import LoginForm from './components/LoginForm';
-import { getPing, createUser, storeToken, getEncouragement, loginUser, createTweet } from './services/api';
+import AllTweets from './components/AllTweets';
+import { getPing, createUser, storeToken, getEncouragement, loginUser, createTweet, getAllTweets } from './services/api';
 
 import './App.css';
 import Axios from 'axios';
@@ -23,18 +24,23 @@ export default class App extends React.Component {
       tweetData: {
         title: "",
         tweet: ""
-      }
+      },
+      tweets: []
     }
   }
 
   async componentDidMount() {
     const resp = await getPing();
     console.log(resp);
-   }
+    const tweets = await getAllTweets();
+    this.setState({
+      tweets: tweets
+    });
+  }
 
   handleRegisterFormChange = (ev) => {
-    const { name, value} = ev.target;
-    this.setState(prevState=> ({
+    const { name, value } = ev.target;
+    this.setState(prevState => ({
       registerFormData: {
         ...prevState.registerFormData,
         [name]: value
@@ -60,7 +66,7 @@ export default class App extends React.Component {
       }
     }))
   }
-  
+
   handleLoginSubmit = async (ev) => {
     ev.preventDefault();
     const resp = await loginUser(this.state.loginFormData);
@@ -71,7 +77,7 @@ export default class App extends React.Component {
       }
     })
   }
-  
+
   handleTweetChange = (ev) => {
     const { name, value } = ev.target;
     this.setState(prevState => ({
@@ -81,7 +87,7 @@ export default class App extends React.Component {
       }
     }));
   }
-  
+
   handleTweetSubmit = async (ev) => {
     ev.preventDefault();
     const resp = await createTweet(this.state.tweetData);
@@ -91,7 +97,7 @@ export default class App extends React.Component {
         tweet: ""
       }
     })
-   }
+  }
 
   render() {
     return (
@@ -110,6 +116,8 @@ export default class App extends React.Component {
           handleTweetSubmit={this.handleTweetSubmit}
           tweetData={this.state.tweetData}
         />
+        <AllTweets
+          tweets={this.state.tweets} />
       </div>
     );
   }

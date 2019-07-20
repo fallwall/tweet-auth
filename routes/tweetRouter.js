@@ -12,4 +12,9 @@ tweets.post('/', restrict, async (req, res) => {
   res.json(tweet);
 });
 
+tweets.get('/', async (req, res) => {
+  const allTweets = await Tweet.findAll();
+  res.json(allTweets);
+});
+
 module.exports = tweets;
