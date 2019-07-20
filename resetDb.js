@@ -1,13 +1,8 @@
 const { sequelize } = require('./models');
 
-const async main() => {
-  try {
+const main = async () => {
     await sequelize.sync({ force: true });
-  } catch (e) {
-    console.log(e.message);
-  } finally {
     process.exit();
-  }
 };
 
 main();
