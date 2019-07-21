@@ -20,7 +20,7 @@ app.use('/ping', (req, res) => {
 });
 
 app.get('/encourage', restrict, (req, res) => {
-  const { name } = res.locals.userData;
+  const { name } = res.locals.user;
   res.json(`You are the sh*t, ${name}`);
 });
 

@@ -11,7 +11,8 @@ import {
   loginUser,
   createTweet,
   getAllTweets,
-  deleteTweet
+  deleteTweet,
+  updateTweet
 } from './services/api';
 
 import './App.css';
@@ -34,7 +35,12 @@ export default class App extends React.Component {
         title: "",
         tweet: ""
       },
-      tweets: []
+      tweets: [],
+      tweetUpdate: {
+        id: "",
+        title: "",
+        tweet: ""
+      }
     }
   }
 
@@ -45,6 +51,7 @@ export default class App extends React.Component {
     this.setState({
       tweets: tweets
     });
+    console.log(this.state.tweets[0]);
   }
 
   handleRegisterFormChange = (ev) => {
@@ -119,6 +126,47 @@ export default class App extends React.Component {
     //filter state didn't work 
   }
 
+  handleUpdate = (ev) => {
+    this.setState({
+      tweetUpdate: {
+        id: ev.target.name,
+        tweet: "",
+        title: ""
+      }
+    });
+  }
+
+  handleChangeUpdate = (ev) => {
+    const { name, value } = ev.target;
+    this.setState(prevState => ({
+      tweetUpdate: {
+        ...prevState.tweetUpdate,
+        [name]: value
+      }
+    }));
+  }
+
+  handleSubmitUpdate = async (ev) => {
+    await updateTweet(this.state.tweetUpdate);
+    this.setState({
+      tweetUpdate: {
+        id: "",
+        title: "",
+        tweet: ""
+      }
+    });
+  }
+
+  handleCancelUpdate = () => {
+    this.setState({
+      tweetUpdate: {
+        id: "",
+        title: "",
+        tweet: ""
+      }
+    });
+  }
+
   render() {
     return (
       <div className="App">
@@ -140,6 +188,10 @@ export default class App extends React.Component {
           tweets={this.state.tweets}
           handleDelete={this.handleDelete}
           handleUpdate={this.handleUpdate}
+          updatingId={this.state.tweetUpdate.id}
+          handleChangeUpdate={this.handleChangeUpdate}
+          handleSubmitUpdate={this.handleSubmitUpdate}
+          handleCancelUpdate={this.handleCancelUpdate}
         />
       </div>
     );

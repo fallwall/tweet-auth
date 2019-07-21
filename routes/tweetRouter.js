@@ -26,4 +26,15 @@ tweets.delete('/:id', restrict, async (req, res) => {
   res.json(allTweets);
 });
 
+tweets.put('/:id', restrict, async (req, res) => {
+  const tweet = await Tweet.update(
+    req.body,
+    {
+      where: {
+        id: req.params.id,
+      },
+    });
+  res.json(tweet);
+});
+
 module.exports = tweets;
