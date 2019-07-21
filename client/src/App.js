@@ -6,7 +6,6 @@ import AllTweets from './components/AllTweets';
 import {
   getPing,
   createUser,
-  storeToken,
   getEncouragement,
   loginUser,
   createTweet,
@@ -67,8 +66,7 @@ export default class App extends React.Component {
   handleRegisterSubmit = async (ev) => {
     ev.preventDefault();
     const newUser = this.state.registerFormData;
-    const resp = await createUser(newUser);
-    // storeToken(resp);
+    await createUser(newUser);
     const msg = await getEncouragement();
     console.log(msg);
   }
