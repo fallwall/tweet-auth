@@ -127,6 +127,7 @@ export default class App extends React.Component {
   }
 
   handleUpdate = (ev) => {
+    ev.preventDefault();
     this.setState({
       tweetUpdate: {
         id: ev.target.name,
