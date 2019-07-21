@@ -17,7 +17,7 @@ tweets.get('/', async (req, res) => {
   res.json(allTweets);
 });
 
-tweets.delete('/:id', async (req, res) => {
+tweets.delete('/:id', restrict, async (req, res) => {
   const allTweets = await Tweet.destroy({
     where: {
       id: req.params.id,

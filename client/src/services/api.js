@@ -31,20 +31,19 @@ export const storeToken = (token) => {
 export const loginUser = async (userData) => {
   const resp = await api.post(`/users/login`, userData);
   const { user, token } = resp.data;
-  localStorage.setItem('authToken', token);
-  api.defaults.headers.common.authorization = `Bearer ${token}`;
+  storeToken(token);
   return user;
 }
 
 export const createTweet = async (tweetData) => {
   await api.post(`/tweets`, tweetData);
 }
- 
+
 export const getAllTweets = async () => {
   const resp = await api.get(`/tweets`);
   return resp.data;
 }
- 
+
 export const deleteTweet = async (id) => {
   await api.delete(`/tweets/${id}`);
- }
+}

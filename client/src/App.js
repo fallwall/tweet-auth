@@ -15,7 +15,7 @@ import {
 } from './services/api';
 
 import './App.css';
-import Axios from 'axios';
+
 
 export default class App extends React.Component {
   constructor() {
@@ -40,7 +40,7 @@ export default class App extends React.Component {
 
   async componentDidMount() {
     const resp = await getPing();
-    console.log(resp);
+    console.log(`${resp}, you are up and running.`);
     const tweets = await getAllTweets();
     this.setState({
       tweets: tweets
@@ -110,10 +110,13 @@ export default class App extends React.Component {
 
   handleDelete = async (ev) => {
     ev.preventDefault();
+    console.log(ev.target.name);
     await deleteTweet(ev.target.name);
-    this.setState(prevState => ({
-      tweets: prevState.tweets.filter(tweet => tweet.id !== ev.target.name)
-    }))
+    const tweets = await getAllTweets();
+    this.setState({
+      tweets: tweets
+    });
+    //filter state didn't work 
   }
 
   render() {
