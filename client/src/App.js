@@ -3,7 +3,16 @@ import RegisterForm from './components/RegisterForm';
 import TweetForm from './components/TweetForm';
 import LoginForm from './components/LoginForm';
 import AllTweets from './components/AllTweets';
-import { getPing, createUser, storeToken, getEncouragement, loginUser, createTweet, getAllTweets } from './services/api';
+import {
+  getPing,
+  createUser,
+  storeToken,
+  getEncouragement,
+  loginUser,
+  createTweet,
+  getAllTweets,
+  deleteTweet
+} from './services/api';
 
 import './App.css';
 import Axios from 'axios';
@@ -99,6 +108,14 @@ export default class App extends React.Component {
     })
   }
 
+  handleDelete = async (ev) => {
+    ev.preventDefault();
+    await deleteTweet(ev.target.name);
+    this.setState(prevState => ({
+      tweets: prevState.tweets.filter(tweet => tweet.id !== ev.target.name)
+    }))
+  }
+
   render() {
     return (
       <div className="App">
@@ -117,7 +134,10 @@ export default class App extends React.Component {
           tweetData={this.state.tweetData}
         />
         <AllTweets
-          tweets={this.state.tweets} />
+          tweets={this.state.tweets}
+          handleDelete={this.handleDelete}
+          handleUpdate={this.handleUpdate}
+        />
       </div>
     );
   }

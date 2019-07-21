@@ -13,7 +13,16 @@ tweets.post('/', restrict, async (req, res) => {
 });
 
 tweets.get('/', async (req, res) => {
-  const allTweets = await Tweet.findAll();
+  const allTweets = await Tweet.findAll({ include: [User] });
+  res.json(allTweets);
+});
+
+tweets.delete('/:id', async (req, res) => {
+  const allTweets = await Tweet.destroy({
+    where: {
+      id: req.params.id,
+    },
+  });
   res.json(allTweets);
 });
 

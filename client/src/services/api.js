@@ -43,4 +43,8 @@ export const createTweet = async (tweetData) => {
 export const getAllTweets = async () => {
   const resp = await api.get(`/tweets`);
   return resp.data;
+}
+ 
+export const deleteTweet = async (id) => {
+  await api.delete(`/tweets/${id}`);
  }
