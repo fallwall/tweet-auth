@@ -20,8 +20,10 @@ app.use('/ping', (req, res) => {
 });
 
 app.get('/encourage', restrict, (req, res) => {
-  const { name } = res.locals.user;
-  res.json(`You are the sh*t, ${name}`);
+  console.log(res.locals.user);
+  const { name } = res.locals.user.userData;
+  const msg = `You are the sh*t, ${name}`;
+  res.json({ msg });
 });
 
 app.listen(PORT, () => {

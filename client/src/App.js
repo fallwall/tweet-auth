@@ -39,7 +39,8 @@ export default class App extends React.Component {
         id: "",
         title: "",
         tweet: ""
-      }
+      },
+      currentUser: ""
     }
   }
 
@@ -50,7 +51,7 @@ export default class App extends React.Component {
     this.setState({
       tweets: tweets
     });
-    console.log(this.state.tweets[0]);
+    console.log(this.state.tweets);
   }
 
   handleRegisterFormChange = (ev) => {
@@ -66,9 +67,13 @@ export default class App extends React.Component {
   handleRegisterSubmit = async (ev) => {
     ev.preventDefault();
     const newUser = this.state.registerFormData;
-    await createUser(newUser);
-    const msg = await getEncouragement();
-    console.log(msg);
+    const resp = await createUser(newUser);
+    const user = resp.name;
+    this.setState({
+      currentUser: user
+    })
+    const resp2 = await getEncouragement();
+    console.log(resp2.data.msg);
   }
 
   handleLoginFormChange = (ev) => {
@@ -84,11 +89,13 @@ export default class App extends React.Component {
   handleLoginSubmit = async (ev) => {
     ev.preventDefault();
     const resp = await loginUser(this.state.loginFormData);
+    const user = resp.name; //user's name
     this.setState({
       loginFormData: {
         name: "",
         password: ""
-      }
+      },
+      currentUser: user
     })
   }
 

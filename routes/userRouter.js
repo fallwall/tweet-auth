@@ -19,12 +19,12 @@ users.post('/', async (req, res) => {
     };
     const user = await User.create(newUser);
     const userData = {
-      id: user.id,
       name: user.name,
       email: user.email,
     };
     const token = genToken({ userData });
-    res.json( token );
+    res.json({ user: userData, token });
+    
   } catch (e) {
     res.status(500).send(e.message);
   }

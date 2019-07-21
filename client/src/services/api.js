@@ -13,19 +13,20 @@ export const getPing = async () => {
 
 export const createUser = async (newUser) => {
   const resp = await api.post(`/users`, newUser);
-  // localStorage.setItem('name', newUser.name);
-  storeToken(resp.data);
-  return resp.data.token;
+  const { user, token } = resp.data;
+  storeToken(token);
+  return user;
 }
 
 export const getEncouragement = async () => {
   const resp = await api.get(`/encourage`);
-  return resp.data;
+  return resp;
 }
 
 export const storeToken = (token) => {
   localStorage.setItem('authToken', token);
   api.defaults.headers.common.authorization = `Bearer ${token}`;
+  console.log("token stored");
 }
 
 export const loginUser = async (userData) => {
