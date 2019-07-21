@@ -113,6 +113,7 @@ export default class App extends React.Component {
         tweet: ""
       }
     })
+    window.location.reload();
   }
 
   handleDelete = async (ev) => {

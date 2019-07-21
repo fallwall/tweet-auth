@@ -1,7 +1,7 @@
 const { Router } = require('express');
 const bcrypt = require('bcrypt');
 const { User } = require('../models');
-const { genToken } = require('../auth');
+const { genToken, restrict } = require('../auth');
 
 
 const users = Router();
@@ -46,6 +46,10 @@ users.post('/login', async (req, res) => {
     console.log(e.message);
     res.status(401).send('Invalid credentials');
   }
+});
+
+users.get('/verify', restrict, (req, res) => {
+  res.json({user: res.locals.user });
 });
 
 module.exports = users;
