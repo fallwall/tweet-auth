@@ -13,7 +13,6 @@ const restrict = (req, res, next) => {
     const user = jwt.verify(token, SECRET);
     console.log(`${user}`);
     res.locals.user = user;
-    debugger;
     next();
   } catch (e) {
     console.log(e);

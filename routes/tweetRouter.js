@@ -1,5 +1,4 @@
 const { Router } = require('express');
-const bcrypt = require('bcrypt');
 const { Tweet, User } = require('../models');
 const { restrict } = require('../auth');
 

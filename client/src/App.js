@@ -11,7 +11,8 @@ import {
   createTweet,
   getAllTweets,
   deleteTweet,
-  updateTweet
+  updateTweet,
+  verifyToken
 } from './services/api';
 
 import './App.css';
@@ -40,18 +41,26 @@ export default class App extends React.Component {
         title: "",
         tweet: ""
       },
-      currentUser: ""
+      currentUser: "",
+      // currentView: null
     }
   }
 
   async componentDidMount() {
     const resp = await getPing();
     console.log(`${resp}, you are up and running.`);
-    const tweets = await getAllTweets();
-    this.setState({
-      tweets: tweets
-    });
-    console.log(this.state.tweets);
+    const user = await verifyToken();
+    if (user) {
+      this.setState({
+        currentUser: user,
+        // currentView: 'welcome'
+      })
+      const tweets = await getAllTweets();
+      this.setState({
+        tweets: tweets
+      });
+      console.log(this.state.tweets);
+    }
   }
 
   handleRegisterFormChange = (ev) => {
@@ -174,7 +183,7 @@ export default class App extends React.Component {
     });
   }
 
-  render() {
+  render(){ 
     return (
       <div className="App">
         <h1>FORUM STUFF</h1>
@@ -202,6 +211,5 @@ export default class App extends React.Component {
         />
       </div>
     );
-  }
+    }  
 }
-
